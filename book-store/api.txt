@@ -1,0 +1,6 @@
+GET /books
+GET /books/:id
+POST /books
+DELETE /books/:id
+
+

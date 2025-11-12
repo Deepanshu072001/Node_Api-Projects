@@ -1,0 +1,15 @@
+# Node modules
+node_modules/
+# History
+.history/
+.vscode/
+# Environment variables
+.env
+
+# Logs
+logs.txt
+*.log
+# Build and cache
+dist/
+build/
+.cache/
