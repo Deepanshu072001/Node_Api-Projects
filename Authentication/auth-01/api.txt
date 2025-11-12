@@ -1,0 +1,12 @@
+post http://localhost:5002/signup/
+{
+  "name": "Bob",
+  "email": "bob123@gmail.com",
+  "password": "bob123"
+}
+token 1762951411521 randomly generated automatically
+
+post http://localhost:5002/me/
+{
+	"token": "1762951411521"
+}
