@@ -1,0 +1,24 @@
+{
+  "name": "authentication",
+  "version": "1.0.0",
+  "description": "Node Rest-Api mini projects with session based authentication",
+  "keywords": [
+    "Auth",
+    "Project"
+  ],
+  "homepage": "https://github.com/Deepanshu072001/Node_Api-Projects#readme",
+  "bugs": {
+    "url": "https://github.com/Deepanshu072001/Node_Api-Projects/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deepanshu072001/Node_Api-Projects.git"
+  },
+  "license": "ISC",
+  "author": "Deepanshu",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
