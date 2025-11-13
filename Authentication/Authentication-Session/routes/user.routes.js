@@ -3,30 +3,19 @@ import db from '../db/index.js';
 import { usersTable, userSessions } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
 import {randomBytes, createHmac } from 'node:crypto'
+import jwt from 'jsonwebtoken';
+import { ensureAuthenticated } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.get('/', async(req, res) => {
-    const sessionId = req.headers['session-id'];
-    if(!sessionId) {
-        return res.status(401).json({ error: 'You are not logged in' });
-    }
+router.patch('/', ensureAuthenticated, async(req, res) => {
 
-    const [data] = await db
-    .select({
-        id: userSessions.id,
-        userId: userSessions.userId,
-        name: usersTable.name,
-        email: usersTable.email
-    })
-    .from(userSessions)
-    .rightJoin(usersTable, eq(usersTable.id, userSessions.userId))
-    .where((table) => eq(table.id, sessionId));
+    return res.json({ status: 'success'});
+});
 
-    if(!data) {
-        return res.status(401).json({ error: 'You are not logged in'});
-    }
-    return res.json({ data});
+router.get('/', ensureAuthenticated, async(req, res) => {
+    const user = req.user; 
+    return res.json({ user});
 });
 
 router.post('/signup', async(req, res) => {
@@ -63,8 +52,10 @@ router.post('/login', async (req, res) => {
     .select({
         id:usersTable.id,
         email: usersTable.email,
+        name: usersTable.name,
         salt: usersTable.salt,
-        password: usersTable.password
+        role: usersTable.role,
+        password: usersTable.password,
     })
     .from(usersTable)
     .where(table => eq(table.email, email ));
@@ -81,14 +72,18 @@ router.post('/login', async (req, res) => {
     if(newHash !== existingHash) {
         return res.status(400).json({ error: 'Incorrect Password!!' })
     }
-    // generate a session for user
-    const [session] = await db.insert(userSessions).values({
-        userId: existingUser.id,
-    }). returning({ id: userSessions.id});
+    // generate/create a (jwt)token for the user
+    // payload -> it store all the information to the token
+    const payload = { 
+        id: existingUser.id,
+        email: existingUser.email,
+        name: existingUser.name,
+        role: existingUser.role,
+    };
 
-    return res.json({ status: 'success', sessionId: session.id});
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '2m'}); 
+return res.json({ status: 'success', token });
 }); 
-
 
 
 export default router;

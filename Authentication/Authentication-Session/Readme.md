@@ -1,7 +1,7 @@
 # Authentication Session Project
 
-This project implements session-based authentication using Express.js, PostgreSQL, and Drizzle ORM.
-It provides secure session management and a structured backend setup with TypeScript-ready tooling.
+This project implements stateless token-based authentication using Express.js, PostgreSQL, and Drizzle ORM.
+It provides secure session management and a structured backend setup with JavaScript/TypeScript-ready tooling.
 
 # 1. Prerequisites
 
@@ -35,9 +35,9 @@ pnpm install
 # 4. Create Environment Variables
 
 Create a .env file in the root directory and define your environment variables:
-DATABASE_URL=postgres://username:password@localhost:5432/databasename
+DATABASE_URL=postgres://username:password@localhost:5432/databaseName
 PORT=5000
-SESSION_SECRET=your-secret-key
+JWT_SECRET=your-secret-key
 Note: Make sure to replace the placeholder values with your actual PostgreSQL credentials.
 
 
@@ -142,17 +142,20 @@ POST http://localhost:8000/user/login
     "email": "user1@gmail.com",
     "password": "user123" 
 }
-# After successful login, a session ID will be generated.
-# Use this session ID in the request headers when calling the /user endpoint to get the logged-in user.
+
+# when the login is done then the jwt token will be generated then pass the token in header.
+# After successful login, a jwt token will be generated.
+# Use this jwt token in the request headers or authorization and (in authorization select for bearer token and pass the token) when calling the /user endpoint to get the logged-in user.
 
 # Get Current User API → Check the logged-in user
 
 GET http://localhost:8000/user/
 # Headers:
-key: session-id
-value: d8f7e734-3775-4376-9850-c787783cb2cb
+Authorization: value
+value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0MWRlYTg1LTUzNDYtNGQ1ZC05OTc0LTBhYTMxNjY5MjNiMiIsImVtYWlsIjoiYW1hbkBnbWFpbC5jb20iLCJuYW1lIjoiQW1hbiBSYXdhdCIsImlhdCI6MTc2MzAyODY2OCwiZXhwIjoxNzYzMDI4Nzg4fQ.zRPcvjKLu0bF6MWrQ6odK0sSsX06LGOS0gETcESPVJI 
 
-# Example session ID format:
-d8f7e734-3775-4376-9850-c787783cb2cb
+Token can be passed on Authorization also .. In authorization select bearer token and pass the token in the token section.
 
-# when the login is done then the session id will be generated then pass the session id in header
+# Example bearer token format:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0MWRlYTg1LTUzNDYtNGQ1ZC05OTc0LTBhYTMxNjY5MjNiMiIsImVtYWlsIjoiYW1hbkBnbWFpbC5jb20iLCJuYW1lIjoiQW1hbiBSYXdhdCIsImlhdCI6MTc2MzAyODY2OCwiZXhwIjoxNzYzMDI4Nzg4fQ.zRPcvjKLu0bF6MWrQ6odK0sSsX06LGOS0gETcESPVJI
+
