@@ -3,11 +3,31 @@ import db from '../db/index.js';
 import { usersTable, userSessions } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
 import {randomBytes, createHmac } from 'node:crypto'
-import { stat } from 'node:fs';
 
 const router = express.Router();
 
-router.get('/') // Returns current logged in user
+router.get('/', async(req, res) => {
+    const sessionId = req.headers['session-id'];
+    if(!sessionId) {
+        return res.status(401).json({ error: 'You are not logged in' });
+    }
+
+    const [data] = await db
+    .select({
+        id: userSessions.id,
+        userId: userSessions.userId,
+        name: usersTable.name,
+        email: usersTable.email
+    })
+    .from(userSessions)
+    .rightJoin(usersTable, eq(usersTable.id, userSessions.userId))
+    .where((table) => eq(table.id, sessionId));
+
+    if(!data) {
+        return res.status(401).json({ error: 'You are not logged in'});
+    }
+    return res.json({ data});
+});
 
 router.post('/signup', async(req, res) => {
     const { name, email, password } = req.body;

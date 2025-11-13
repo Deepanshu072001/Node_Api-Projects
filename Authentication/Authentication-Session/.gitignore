@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+# History
+.history/
+# Vs Code
+.vscode/
+
+# Docker
+docker-compose.yml
+
+
+# Environment variables
+.env
+
+# Logs
+logs.txt
+*.log
+
+# Build and cache
+dist/
+build/
+.cache/

@@ -1,0 +1,17 @@
+POST http://localhost:8000/user/signup 
+{
+    "name": "User1",
+    "email": "user1@gmail.com",
+    "password": "useR123" 
+}
+
+POST http://localhost:8000/user/login
+{
+    "email": "user1@gmail.com",
+    "password": "user123" 
+}
+-->> session id will be generated, by passing the session id in the headers of /user to get the current user logged in..
+
+GET http://localhost:8000/user/
+when the login is done then the session id will be generated then pass the session id in header: 
+key: session-id values: d8f7e734-3775-4376-9850-c787783cb2cb  <--( session id something like this )
