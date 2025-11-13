@@ -1,0 +1,158 @@
+# Authentication Session Project
+
+This project implements session-based authentication using Express.js, PostgreSQL, and Drizzle ORM.
+It provides secure session management and a structured backend setup with TypeScript-ready tooling.
+
+# 1. Prerequisites
+
+Before starting, ensure that you have the following installed:
+
+Node.js (v18 or higher)
+
+pnpm (v10.22.0 or compatible)
+
+PostgreSQL (Database server)
+
+# Check installations:
+node -v
+pnpm -v
+psql --version
+
+
+# 2. Create a New Project
+
+# Create a new folder and initialize the project:
+mkdir authentication-session
+cd authentication-session
+pnpm init
+
+
+# 3. Install Dependencies
+
+# Run the following command to install all dependencies:
+pnpm install
+
+# 4. Create Environment Variables
+
+Create a .env file in the root directory and define your environment variables:
+DATABASE_URL=postgres://username:password@localhost:5432/databasename
+PORT=5000
+SESSION_SECRET=your-secret-key
+Note: Make sure to replace the placeholder values with your actual PostgreSQL credentials.
+
+
+# 5. Setup Drizzle ORM
+a. Create a Drizzle Configuration File
+
+Create a new file named drizzle.config.js in the project root with the following content:
+import { defineConfig } from "drizzle-kit";
+
+export default defineConfig({
+  schema: "./server/schema.ts",   // Path to your schema definition
+  out: "./drizzle",               // Output folder for migrations
+  driver: "pg",                   // PostgreSQL driver
+  dbCredentials: {
+    connectionString: process.env.DATABASE_URL!,
+  },
+});
+Note : Can take reference from the drizzle-orm official documentation..
+
+b. Create a Database Schema
+
+Inside your server/ folder, create a file named schema.js:
+Note : Can take reference from the drizzle-orm official documentation..
+
+c. Push Schema to Database
+
+Once the schema and config are ready, run:
+pnpm db:push
+Note: This command applies your schema to the PostgreSQL database.
+
+d. Open Drizzle Studio
+
+To explore and manage your database visually:
+pnpm db:studio
+
+# 6. Create the Server File
+
+Create a new file named server/index.js (or server.js)
+
+# 7. Run the Project
+Development Mode
+
+Run the project in development mode with auto-reload:
+pnpm dev
+
+Production Mode
+
+Run the project normally (no auto-reload):
+pnpm start
+
+# 8. Project Structure for example
+authentication-session/
+├── server/
+│   ├── index.js          # Main server entry file
+│   ├── schema.ts         # Database schema for Drizzle ORM
+├── drizzle.config.ts     # Drizzle ORM configuration
+├── .env                  # Environment variables
+├── package.json          # Dependencies and scripts
+├── node_modules/         # Installed packages
+└── README.md             # Setup guide
+
+# 9. Useful Commands
+
+| Command          | Description                              |
+| ---------------- | ---------------------------------------- |
+| `pnpm install`   | Install all dependencies                 |
+| `pnpm dev`       | Start development server with watch mode |
+| `pnpm start`     | Start server in production mode          |
+| `pnpm db:push`   | Apply schema to the PostgreSQL database  |
+| `pnpm db:studio` | Open Drizzle Studio interface            |
+
+
+# 10. Notes
+
+Ensure PostgreSQL service is running before executing database commands.
+Update your .env file before running the server.
+Use console.log() for debugging database connections and server setup.
+
+# 11. License
+
+This project is licensed under the ISC License.
+You are free to use, modify, and distribute this project under the same license.
+
+# Api's for reference
+# Use Postman or Thunder client to test the api's 
+
+# signup api --->> create a user
+
+POST http://localhost:8000/user/signup 
+# pass this in body as a json       
+{
+    "name": "User1",
+    "email": "user1@gmail.com",
+    "password": "useR123" 
+}
+
+# login ai --->> login user to the account
+
+POST http://localhost:8000/user/login
+# pass this in body as a json 
+{
+    "email": "user1@gmail.com",
+    "password": "user123" 
+}
+# After successful login, a session ID will be generated.
+# Use this session ID in the request headers when calling the /user endpoint to get the logged-in user.
+
+# Get Current User API → Check the logged-in user
+
+GET http://localhost:8000/user/
+# Headers:
+key: session-id
+value: d8f7e734-3775-4376-9850-c787783cb2cb
+
+# Example session ID format:
+d8f7e734-3775-4376-9850-c787783cb2cb
+
+# when the login is done then the session id will be generated then pass the session id in header
