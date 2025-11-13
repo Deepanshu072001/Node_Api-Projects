@@ -134,7 +134,7 @@ POST http://localhost:8000/user/signup
     "password": "useR123" 
 }
 
-# login ai --->> login user to the account
+# login api --->> login user to the account
 
 POST http://localhost:8000/user/login
 # pass this in body as a json 
