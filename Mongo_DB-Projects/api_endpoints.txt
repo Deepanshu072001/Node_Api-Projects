@@ -1,0 +1,118 @@
+=============================
+   USER AUTH API ENDPOINTS
+=============================
+
+BASE URL:
+http://localhost:8000
+
+
+=============================
+1. USER SIGNUP
+=============================
+
+METHOD: POST
+ENDPOINT: /user/signup
+URL: http://localhost:8000/user/signup
+
+REQUEST BODY:
+{
+  "name": "John",
+  "email": "john@gmail.com",
+  "password": "123456"
+}
+
+RESPONSE:
+{
+  "status": "success",
+  "data": { "id": "user_id_here" }
+}
+
+
+
+=============================
+2. USER LOGIN
+=============================
+
+METHOD: POST
+ENDPOINT: /user/login
+URL: http://localhost:8000/user/login
+
+
+REQUEST BODY:
+{
+  "email": "john@gmail.com",
+  "password": "123456"
+}
+
+RESPONSE:
+{
+  "status": "success",
+  "token": "<jwt_token>"
+}
+
+
+
+=============================
+3. GET USER PROFILE (Protected)
+=============================
+
+METHOD: GET
+ENDPOINT: /user
+URL: http://localhost:8000/user
+
+
+HEADERS:
+Authorization: Bearer <token>
+
+RESPONSE:
+{
+  "status": "success",
+  "data": {
+    "_id": "123",
+    "name": "John",
+    "email": "john@gmail.com"
+  }
+}
+
+
+
+=============================
+4. UPDATE USER NAME (Protected)
+=============================
+
+METHOD: PATCH
+ENDPOINT: /user
+URL: http://localhost:8000/user
+
+
+HEADERS:
+Authorization: Bearer <token>
+Content-Type: application/json
+
+REQUEST BODY:
+{
+  "name": "Updated Name"
+}
+
+RESPONSE:
+{
+  "status": "success"
+}
+
+
+
+=============================
+5. CHECK SERVER STATUS
+=============================
+
+METHOD: GET
+ENDPOINT: /
+URL: http://localhost:8000/
+
+
+RESPONSE:
+"Server running..."
+
+
+      END OF FILE
+
