@@ -1,0 +1,39 @@
+POST http://localhost:8000/user/signup
+
+body --> data in json format
+{
+  "first_name": "Deepanshu",
+  "last_name": "Raturi",
+  "email": "deepanshu1@gmail.com",
+  "password": "deep12"
+}
+
+POST http://localhost:8000/user/login
+body --> data in json format
+{
+  "email": "deepanshu1@gmail.com",
+  "password": "deep12"
+}
+-->> JWT Token will be generated copy it and pass it in the shorten url to access it..
+
+POST http://localhost:8000/shorten
+pass the token in the authorization section in the bearer field.
+in the json body pass the data also
+{
+  "url": "https://github.com/Deepanshu072001/Node_Api-Projects",
+  "code": "mygitrepo"
+}
+
+GET http://localhost:8000/mygitrepo
+this will redirect to the website which url u have provided.. 
+Use the GET url in the browser to check it's working or not.. 
+
+GET http://localhost:8000/codes
+Bearer token 
+Pass the token in the auth bearer field to get all the urls or codes of a user.
+
+DELETE http://localhost:8000/:id
+/:id
+Bearer Token
+Pass the token in the auth bearer field 
+Pass the id in the url to delete the code 
