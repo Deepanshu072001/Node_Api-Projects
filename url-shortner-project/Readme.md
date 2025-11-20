@@ -406,6 +406,45 @@ GET http://localhost:8000/mygitrepo
 # Redirects →
 https://github.com/Deepanshu072001/Node_Api-Projects
 
+# 5️⃣ PUT /:id
+Updates an existing shortened URL.
+🔐 Protected Route — Requires Bearer Token
+
+# Example
+PUT http://localhost:8000/e3b7088b-55cd-4a59-886f-a9248b993438
+
+# Request Body
+{
+  "url": "https://developer.com",
+  "code": "dev"
+}
+
+# Success Response
+{
+  "message": "URL updated successfully",
+  "updated": {
+    "id": "3db322c0-a3d7-45e6-aee5-dd2972d7323d",
+    "shortCode": "gg",
+    "targetURL": "https://google.com"
+  }
+}
+
+# Error Response
+{
+  "error": "URL not found or unauthorized"
+}
+
+# 6️⃣ DELETE /:id
+Deletes a shortened URL by ID.
+🔐 Protected Route — Requires Bearer Token
+
+# Example
+DELETE http://localhost:8000/e3b7088b-55cd-4a59-886f-a9248b993438
+
+# Success Response
+{
+  "deleted": true
+}
 
 
 # 📘 GitHub Setup Process (Step-by-Step)

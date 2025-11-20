@@ -37,3 +37,14 @@ DELETE http://localhost:8000/:id
 Bearer Token
 Pass the token in the auth bearer field 
 Pass the id in the url to delete the code 
+
+PUT http://localhost:8000/3db322c0-a3d7-45e6-aee5-dd2972d7323d
+/:id
+Bearer Token
+Pass the token in the auth bearer field 
+Pass the id in the url to put/update the record.
+Pass the data in the json body 
+{
+  "url": "https://google.com",
+  "code": "gg"
+}
